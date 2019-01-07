@@ -26,11 +26,10 @@ variable "tfe_workspace_ids" {
   type        = "map"
 
   default = {
-    "app-prod"                = "ws-LbK9gZEL4beEw9A2"
-    "app-dev"                 = "ws-uMM93B6XrmCwh3Bj"
-    "app-staging"             = "ws-Mp6tkwtspVNZ5DSf"
-    "app-dev-sandbox-bennett" = "ws-s7jPpcQG4AGrSsTb"
-    "tfe-policies"            = "ws-Vt9UKZE5ejqGMp94"
+    "app-prod"                = "ws-R4MXdtKSDmgfKcQn"
+    "app-dev"                 = "ws-4oNjYFWgPt4XbjbD"
+    "app-staging"             = "ws-nr6db5Pf84AoH66f"
+    "tfe-policies"            = "ws-eoUEGFo5ytqPgTni"
   }
 }
 

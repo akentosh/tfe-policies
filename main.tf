@@ -81,7 +81,6 @@ resource "tfe_policy_set" "development" {
 
   workspace_external_ids = [
     "${var.tfe_workspace_ids["app-dev"]}",
-    "${var.tfe_workspace_ids["app-dev-sandbox-bennett"]}",
   ]
 }
 

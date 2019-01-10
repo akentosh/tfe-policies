@@ -26,10 +26,10 @@ variable "tfe_workspace_ids" {
   type        = "map"
 
   default = {
-    "app-prod"                = "ws-R4MXdtKSDmgfKcQn"
-    "app-dev"                 = "ws-4oNjYFWgPt4XbjbD"
-    "app-staging"             = "ws-nr6db5Pf84AoH66f"
-    "tfe-policies"            = "ws-eoUEGFo5ytqPgTni"
+    "app01-prod"                = "ws-R4MXdtKSDmgfKcQn"
+    "app01-dev"                 = "ws-4oNjYFWgPt4XbjbD"
+    "app01-staging"             = "ws-nr6db5Pf84AoH66f"
+    "tfe-policies"              = "ws-eoUEGFo5ytqPgTni"
   }
 }
 

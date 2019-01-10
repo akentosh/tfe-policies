@@ -1,0 +1,32 @@
+import "tfplan"
+
+# Get all AWS instances from all modules
+get_aws_instances = func() {
+    instances = []
+    for tfplan.module_paths as path {
+        instances += values(tfplan.module(path).resources.aws_instance) else []
+    }
+    return instances
+}
+
+# Allowed AMIs
+allowed_amis = [
+  "ami-0f9cf087c1f27d9b1",
+  "ami-009d6802948d06e52",
+]
+
+aws_instances = get_aws_instances()
+
+# Rule to restrict only allowed AMIs 
+instance_amis_allowed = rule {
+    all aws_instances as _, instances {
+      all instances as index, r {
+  	   r.applied.ami in allowed_amis 
+      }
+    }
+}
+  
+# Main rule that requires other rules to be true
+main = rule {
+  (instance_amis_allowed) else true
+}

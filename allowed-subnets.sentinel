@@ -1,0 +1,33 @@
+import "tfplan"
+
+# Get all AWS instances from all modules
+get_aws_instances = func() {
+    instances = []
+    for tfplan.module_paths as path {
+        instances += values(tfplan.module(path).resources.aws_instance) else []
+    }
+    return instances
+}
+
+# Allowed subnets
+allowed_subnets = [
+  "subnet-036103be4e6fb94af",
+  "subnet-05f417996108c1f5f",
+  "subnet-0228676fdd8091061",
+]
+
+aws_instances = get_aws_instances()
+
+# Rule to restrict only allowed private subnets
+instance_allowed_subnets = rule {
+    all aws_instances as _, instances {
+      all instances as index, r {
+  	   r.applied.subnet_id in allowed_subnets 
+      }
+    }
+}
+  
+# Main rule that requires other rules to be true
+main = rule {
+  (instance_allowed_subnets) else true
+}

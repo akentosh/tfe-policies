@@ -1,0 +1,25 @@
+import "tfplan"
+
+# Get all AWS internet gateways from all modules
+get_internet_gateways = func() {
+    internet_gateways = []
+    for tfplan.module_paths as path {
+        internet_gateways += values(tfplan.module(path).resources.aws_internet_gateway) else []
+    }
+    return internet_gateways
+}
+  
+internet_gateways = get_internet_gateways()
+
+no_internet_gateways = rule {
+  all internet_gateways as name, instances {
+    all instances as index, r {
+      (length(r.applied.aws_internet_gateway) < 0) else false
+    }
+  }
+}
+
+
+main = rule {
+  (no_internet_gateways) else true
+}

@@ -182,7 +182,6 @@ resource "tfe_sentinel_policy" "allowed-subnets" {
   policy       = "${file("./allowed-subnets.sentinel")}"
   enforce_mode = "hard-mandatory"
 }
-
 #-------------------------------------------------------------------//
 
 # Compute instance policies:
@@ -236,8 +235,7 @@ resource "tfe_sentinel_policy" "allowed-amis" {
   policy       = "${file("./allowed-amis.sentinel")}"
   enforce_mode = "hard-mandatory"
 }
-
-------------------------------------------------------------------------//
+#------------------------------------------------------------------------//
 
 # Storage Policies: 
 
@@ -250,5 +248,4 @@ resource "tfe_sentinel_policy" "s3-acl-encryption" {
   policy       = "${file("./s3-acl-encryption.sentinel")}"
   enforce_mode = "hard-mandatory"
 }
-
---------------------------------------------------------------------------//
+#--------------------------------------------------------------------------//

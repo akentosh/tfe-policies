@@ -14,6 +14,7 @@ allowed_subnets = [
   "subnet-036103be4e6fb94af",
   "subnet-05f417996108c1f5f",
   "subnet-0228676fdd8091061",
+  "subnet-015d842f592799509",
 ]
 
 aws_instances = get_aws_instances()

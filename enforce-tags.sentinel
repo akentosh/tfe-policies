@@ -1,0 +1,10 @@
+import "tfplan"
+
+main = rule {
+  all tfplan.resources.aws_instance as _, instances {
+    all instances as _, r {
+      r.applied contains "tags" and
+      r.applied.tags contains "billing-id"
+    }
+  }
+}

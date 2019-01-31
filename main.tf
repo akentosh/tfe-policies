@@ -29,7 +29,9 @@ variable "tfe_workspace_ids" {
     "app01-prod"                = "ws-R4MXdtKSDmgfKcQn"
     "app01-dev"                 = "ws-4oNjYFWgPt4XbjbD"
     "app01-staging"             = "ws-nr6db5Pf84AoH66f"
+    "hashi-stack"               = "ws-rVgR8qGzxH7Xhwww"
     "tfe-policies"              = "ws-eoUEGFo5ytqPgTni"
+    
   }
 }
 
@@ -47,13 +49,13 @@ resource "tfe_policy_set" "global" {
 
   policy_ids = [
     "${tfe_sentinel_policy.passthrough.id}",
-    "${tfe_sentinel_policy.aws-block-allow-all-cidr.id}",
-    "${tfe_sentinel_policy.azurerm-block-allow-all-cidr.id}",
-    "${tfe_sentinel_policy.gcp-block-allow-all-cidr.id}",
-    "${tfe_sentinel_policy.aws-restrict-instance-type-default.id}",
-    "${tfe_sentinel_policy.azurerm-restrict-vm-size.id}",
-    "${tfe_sentinel_policy.gcp-restrict-machine-type.id}",
-    "${tfe_sentinel_policy.allowed-amis.id}",
+    #"${tfe_sentinel_policy.aws-block-allow-all-cidr.id}",
+    #"${tfe_sentinel_policy.azurerm-block-allow-all-cidr.id}",
+    #"${tfe_sentinel_policy.gcp-block-allow-all-cidr.id}",
+    #"${tfe_sentinel_policy.aws-restrict-instance-type-default.id}",
+    #"${tfe_sentinel_policy.azurerm-restrict-vm-size.id}",
+    #"${tfe_sentinel_policy.gcp-restrict-machine-type.id}",
+    
   ]
 }
 
@@ -64,6 +66,8 @@ resource "tfe_policy_set" "production" {
 
   policy_ids = [
     "${tfe_sentinel_policy.aws-restrict-instance-type-prod.id}",
+    "${tfe_sentinel_policy.allowed-amis.id}",
+    
   ]
 
   workspace_external_ids = [
@@ -102,6 +106,20 @@ resource "tfe_policy_set" "staging" {
 
   workspace_external_ids = [
     "${var.tfe_workspace_ids["app01-staging"]}",
+  ]
+}
+
+resource "tfe_policy_set" "aws-development" {
+  name         = "aws-development"
+  description  = "Policies that should be enforced on development infrastructure."
+  organization = "${var.tfe_organization}"
+
+  policy_ids = [
+    "${tfe_sentinel_policy.enforce-tags.id}",
+  ]
+
+  workspace_external_ids = [
+    "${var.tfe_workspace_ids["hashi-stack"]}",
   ]
 }
 
@@ -249,3 +267,12 @@ resource "tfe_sentinel_policy" "s3-acl-encryption" {
   enforce_mode = "hard-mandatory"
 }
 #--------------------------------------------------------------------------//
+
+# Tag Policies
+
+resource "tfe_sentinel_policy" "enforce-tags" {
+  name         = "enforce-tags"
+  description  = "Policy to enforce instances have tags"
+  organization = "${var.tfe_organization}"
+  policy       = "${file("./enforce-tags.sentinel")}"
+  enforce_mode = "hard-mandatory"

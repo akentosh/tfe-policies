@@ -1,3 +1,9 @@
+provider "tfe" {
+  hostname = "${var.tfe_hostname}"
+  token    = "${var.tfe_token}"
+  version  = "~> 0.4"
+}
+
 terraform {
   backend "remote" {
     hostname     = "app.terraform.io"
@@ -35,11 +41,6 @@ variable "tfe_workspace_ids" {
   }
 }
 
-provider "tfe" {
-  hostname = "${var.tfe_hostname}"
-  token    = "${var.tfe_token}"
-  version  = "~> 0.4"
-}
 
 resource "tfe_policy_set" "global" {
   name         = "global"
@@ -276,3 +277,4 @@ resource "tfe_sentinel_policy" "enforce-tags" {
   organization = "${var.tfe_organization}"
   policy       = "${file("./enforce-tags.sentinel")}"
   enforce_mode = "hard-mandatory"
+}

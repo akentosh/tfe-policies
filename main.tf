@@ -68,6 +68,9 @@ resource "tfe_policy_set" "production" {
   policy_ids = [
     "${tfe_sentinel_policy.aws-restrict-instance-type-prod.id}",
     "${tfe_sentinel_policy.allowed-amis.id}",
+    "${tfe_sentinel_policy.aws-block-allow-all-cidr.id}",
+    "${tfe_sentinel_policy.s3-acl-encryption.id}",
+    
     
   ]
 

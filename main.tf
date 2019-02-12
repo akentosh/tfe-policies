@@ -27,18 +27,13 @@ variable "tfe_organization" {
   default     = "example_corp"
 }
 
-variable "tfe_workspace_ids" {
-  description = "Mapping of workspace names to IDs, for easier use in policy sets."
-  type        = "map"
+data "tfe_workspace_ids" "all" {
+  names        = ["*"]
+  organization = "${var.tfe_organization}"
+}
 
-  default = {
-    "app01-prod"                = "ws-R4MXdtKSDmgfKcQn"
-    "app01-dev"                 = "ws-4oNjYFWgPt4XbjbD"
-    "app01-staging"             = "ws-nr6db5Pf84AoH66f"
-    "hashi-stack"               = "ws-rVgR8qGzxH7Xhwww"
-    "tfe-policies"              = "ws-eoUEGFo5ytqPgTni"
-    
-  }
+locals {
+  workspaces = "${data.tfe_workspace_ids.all.external_ids}" # map of names to IDs
 }
 
 
@@ -75,7 +70,7 @@ resource "tfe_policy_set" "production" {
   ]
 
   workspace_external_ids = [
-    "${var.tfe_workspace_ids["app01-prod"]}",
+    "${local.workspaces["app01-prod"]}",
   ]
 }
 
@@ -92,7 +87,7 @@ resource "tfe_policy_set" "development" {
   ]
 
   workspace_external_ids = [
-    "${var.tfe_workspace_ids["app01-dev"]}",
+    "${local.workspaces["app01-dev"]}",
   ]
 }
 
@@ -109,7 +104,7 @@ resource "tfe_policy_set" "staging" {
   ]
 
   workspace_external_ids = [
-    "${var.tfe_workspace_ids["app01-staging"]}",
+    "${local.workspaces["app01-staging"]}",
   ]
 }
 
@@ -123,7 +118,7 @@ resource "tfe_policy_set" "aws-development" {
   ]
 
   workspace_external_ids = [
-    "${var.tfe_workspace_ids["hashi-stack"]}",
+    "${local.workspaces["hashi-stack"]}",
   ]
 }
 
@@ -137,7 +132,7 @@ resource "tfe_policy_set" "sentinel" {
   ]
 
   workspace_external_ids = [
-    "${var.tfe_workspace_ids["tfe-policies"]}",
+    "${local.workspaces["tfe-policies"]}",
   ]
 }
 

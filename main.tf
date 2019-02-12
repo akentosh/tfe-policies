@@ -70,7 +70,7 @@ resource "tfe_policy_set" "production" {
   ]
 
   workspace_external_ids = [
-    "${local.workspaces["app01-prod"]}",
+    "${local.workspaces["ExampleTeam-production"]}",
   ]
 }
 
@@ -87,7 +87,7 @@ resource "tfe_policy_set" "development" {
   ]
 
   workspace_external_ids = [
-    "${local.workspaces["app01-dev"]}",
+    "${local.workspaces["ExampleTeam-development"]}",
   ]
 }
 
@@ -104,7 +104,7 @@ resource "tfe_policy_set" "staging" {
   ]
 
   workspace_external_ids = [
-    "${local.workspaces["app01-staging"]}",
+    "${local.workspaces["ExampleTeam-staging"]}",
   ]
 }
 

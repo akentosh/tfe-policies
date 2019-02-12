@@ -45,12 +45,12 @@ resource "tfe_policy_set" "global" {
 
   policy_ids = [
     "${tfe_sentinel_policy.passthrough.id}",
-    #"${tfe_sentinel_policy.aws-block-allow-all-cidr.id}",
-    #"${tfe_sentinel_policy.azurerm-block-allow-all-cidr.id}",
-    #"${tfe_sentinel_policy.gcp-block-allow-all-cidr.id}",
-    #"${tfe_sentinel_policy.aws-restrict-instance-type-default.id}",
-    #"${tfe_sentinel_policy.azurerm-restrict-vm-size.id}",
-    #"${tfe_sentinel_policy.gcp-restrict-machine-type.id}",
+    "${tfe_sentinel_policy.aws-block-allow-all-cidr.id}",
+    "${tfe_sentinel_policy.azurerm-block-allow-all-cidr.id}",
+    "${tfe_sentinel_policy.gcp-block-allow-all-cidr.id}",
+    "${tfe_sentinel_policy.aws-restrict-instance-type-default.id}",
+    "${tfe_sentinel_policy.azurerm-restrict-vm-size.id}",
+    "${tfe_sentinel_policy.gcp-restrict-machine-type.id}",
     
   ]
 }

@@ -169,7 +169,7 @@ resource "tfe_policy_set" "sentinel" {
   # brackets to avoid interpretation as a list of lists. If the expression
   # returns a single list item then leave it as-is and remove this TODO comment.
   workspace_external_ids = [
-    local.workspaces["tfe-policies"],
+    local.workspaces["tfe-policies-example"],
   ]
 }
 
